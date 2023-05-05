@@ -4,10 +4,12 @@ import { InputHandler } from '@pokemon-game/utils/input-hanler';
 import { Player } from '../player';
 import { Sprite } from '../sprite';
 import { Collisions } from '../collisions';
+import { BattleZones } from '../battle-zones';
 
 import townMapImg from '@pokemon-game/assets/images/town-map.png';
 import townMapForegroundImg from '@pokemon-game/assets/images/town-map-foreground.png';
 import rawCollisions from '@pokemon-game/data/collisions.json';
+import rawBattleZones from '@pokemon-game/data/battle-zones.json';
 
 const mapImage = new Image();
 mapImage.src = townMapImg;
@@ -23,6 +25,7 @@ class Game {
   map: Sprite;
   mapForeground: Sprite;
   collisions: Collisions;
+  battleZones: BattleZones;
   input = new InputHandler();
   animationRequestId: number | null = null;
   lastTime = 0;
@@ -47,11 +50,16 @@ class Game {
       rawCollisions,
       map: this.map,
     });
+    this.battleZones = new BattleZones({
+      rawBattleZones,
+      map: this.map,
+    });
   }
 
   render() {
     this.map.draw(this.context);
     this.collisions.draw(this.context);
+    this.battleZones.draw(this.context);
     this.player.draw(this.context);
     this.mapForeground.draw(this.context);
   }
@@ -60,6 +68,7 @@ class Game {
     this.player.update(deltaTime);
     this.updateMap();
     this.collisions.update(deltaTime);
+    this.battleZones.update(deltaTime);
   }
 
   updateMap() {

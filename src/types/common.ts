@@ -9,4 +9,10 @@ type RawCollisions = {
   width: number;
 };
 
-export type { Position, RawCollisions };
+type RawBattleZones = {
+  data: number[];
+  height: number;
+  width: number;
+};
+
+export type { Position, RawCollisions, RawBattleZones };
