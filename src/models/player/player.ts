@@ -33,7 +33,7 @@ class Player {
     this.sprite.draw(context);
 
     this.drawDebugInfo(context);
-    this.drawDebugCircle(context);
+    this.drawDebugCircles(context);
   }
 
   update(deltaTime: number) {
@@ -86,7 +86,7 @@ class Player {
     );
   }
 
-  private drawDebugCircle(context: CanvasRenderingContext2D) {
+  private drawDebugCircles(context: CanvasRenderingContext2D) {
     context.fillStyle = '#fff';
     context.strokeStyle = '#fff';
 
@@ -95,6 +95,25 @@ class Player {
       this.collisionX,
       this.collisionY,
       this.collisionRadius,
+      0,
+      Math.PI * 2
+    );
+
+    context.save();
+    context.globalAlpha = 0.5;
+    context.fill();
+    context.restore();
+
+    context.stroke();
+
+    context.fillStyle = '#f00';
+    context.strokeStyle = '#f00';
+
+    context.beginPath();
+    context.arc(
+      this.collisionX,
+      this.collisionY,
+      this.collisionRadius * 0.5,
       0,
       Math.PI * 2
     );
@@ -122,9 +141,31 @@ class Player {
     });
 
     if (isCollision) return;
+    const isColligingBattleZone = this.isColligingBattleZone({ x, y });
+
+    if (isColligingBattleZone) {
+      console.log('BATTLE_ZONE');
+    }
 
     this.mapX += x;
     this.mapY += y;
+  }
+
+  private isColligingBattleZone({ x = 0, y = 0 }: { x?: number; y?: number }) {
+    const { battleZones } = this.game.battleZones;
+    const isCollision = battleZones.some((battleZone) => {
+      return CollisionDetector.circleRect(
+        this.collisionX,
+        this.collisionY,
+        this.collisionRadius * 0.5,
+        battleZone.mapX + x,
+        battleZone.mapY + y,
+        battleZone.width,
+        battleZone.height
+      );
+    });
+
+    return isCollision;
   }
 }
 
