@@ -1,18 +1,22 @@
 class InputHandler {
-  keys = new Set<string>();
-  lastKey: string | null = null;
+  keys: string[] = [];
 
   constructor(private element = window) {
     this.init();
   }
 
   private handleKeydown = (event: KeyboardEvent) => {
-    this.keys.add(event.key);
-    this.lastKey = event.key;
+    if (this.keys.includes(event.key)) return;
+    this.keys.push(event.key);
   };
   private handleKeyup = (event: KeyboardEvent) => {
-    this.keys.delete(event.key);
+    if (!this.keys.includes(event.key)) return;
+    this.keys.splice(this.keys.indexOf(event.key), 1);
   };
+
+  get lastKey() {
+    return this.keys.at(-1) ?? null;
+  }
 
   private init() {
     this.element.addEventListener('keydown', this.handleKeydown);

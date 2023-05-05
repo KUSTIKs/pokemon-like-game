@@ -1,5 +1,3 @@
-import { Position } from '@pokemon-game/types/common';
-
 class Sprite {
   image: HTMLImageElement;
   x: number;

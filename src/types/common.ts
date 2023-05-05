@@ -3,4 +3,10 @@ type Position = {
   y: number;
 };
 
-export type { Position };
+type RawCollisions = {
+  data: number[];
+  height: number;
+  width: number;
+};
+
+export type { Position, RawCollisions };
