@@ -23,26 +23,31 @@ class Boundary {
     this.height = height;
   }
 
+  get mapX() {
+    return this.x + this.offsetX;
+  }
+  get mapY() {
+    return this.y + this.offsetY;
+  }
+
   draw(context: CanvasRenderingContext2D) {
     context.fillStyle = 'red';
     context.strokeStyle = 'red';
 
     context.save();
     context.globalAlpha = 0.5;
-    context.fillRect(
-      this.x + this.offsetX,
-      this.y + this.offsetY,
-      this.width,
-      this.height
-    );
+    context.fillRect(this.mapX, this.mapY, this.width, this.height);
     context.restore();
 
-    context.strokeRect(
-      this.x + this.offsetX,
-      this.y + this.offsetY,
-      this.width,
-      this.height
-    );
+    context.strokeRect(this.mapX, this.mapY, this.width, this.height);
+
+    // write coordinates on boundary
+    context.fillStyle = '#fff';
+    context.font = '10px monospace';
+    context.fillText(`${this.x}`, this.mapX + 5, this.mapY + 10);
+    context.fillText(`${this.y}`, this.mapX + 5, this.mapY + 10 * 2);
+    context.fillText(`${this.mapX}`, this.mapX + 5, this.mapY + 10 * 3);
+    context.fillText(`${this.mapY}`, this.mapX + 5, this.mapY + 10 * 4);
   }
 }
 
