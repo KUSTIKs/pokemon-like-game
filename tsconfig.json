@@ -21,7 +21,8 @@
     "baseUrl": ".",
     "paths": {
       "@pokemon-game/assets/*": ["./src/assets/*"],
-      "@pokemon-game/constants/*": ["./src/constants/*"]
+      "@pokemon-game/constants/*": ["./src/constants/*"],
+      "@pokemon-game/utils/*": ["./src/utils/*"]
     }
   },
   "include": ["src"]

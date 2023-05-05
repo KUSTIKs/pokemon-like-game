@@ -11,6 +11,7 @@ export default defineConfig({
     alias: {
       '@pokemon-game/assets': getPath('./src/assets'),
       '@pokemon-game/constants': getPath('./src/constants'),
+      '@pokemon-game/utils': getPath('./src/utils'),
     },
   },
 });

@@ -1,7 +1,8 @@
-import { setupGame } from './game';
+import { Game } from './models/game';
 
 import './styles/styles.css';
 
 const gameCanvas = document.querySelector<HTMLCanvasElement>('#game')!;
 
-setupGame(gameCanvas);
+const game = new Game(gameCanvas);
+game.render();
