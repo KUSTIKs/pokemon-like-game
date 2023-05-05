@@ -1,32 +1,32 @@
-import { RawBattleZones } from '@pokemon-game/types/common';
+import { RawCollisions } from '@pokemon-game/types/common';
 import { TILE_SIZE } from '@pokemon-game/constants/game';
 
-import { Boundary } from '../boundary';
 import { Sprite } from '../sprite';
+import { Collision } from '../collision';
 
-class BattleZones {
+class CollisionMap {
   height: number;
   width: number;
   data: number[][] = [];
-  battleZones: Boundary[] = [];
+  collisions: Collision[] = [];
   map: Sprite;
 
   constructor({
-    rawBattleZones,
+    rawCollisions,
     map,
   }: {
-    rawBattleZones: RawBattleZones;
+    rawCollisions: RawCollisions;
     map: Sprite;
   }) {
-    this.height = rawBattleZones.height;
-    this.width = rawBattleZones.width;
+    this.height = rawCollisions.height;
+    this.width = rawCollisions.width;
     this.map = map;
-    this.init(rawBattleZones);
+    this.init(rawCollisions);
   }
 
-  private init(rawBattleZones: RawBattleZones) {
+  private init(rawCollisions: RawCollisions) {
     for (let rowIndex = 0; rowIndex < this.height; rowIndex += 1) {
-      const row = rawBattleZones.data.slice(
+      const row = rawCollisions.data.slice(
         rowIndex * this.width,
         (rowIndex + 1) * this.width
       );
@@ -35,8 +35,8 @@ class BattleZones {
         const cell = row[columnIndex];
 
         if (cell !== 0) {
-          this.battleZones.push(
-            new Boundary({
+          this.collisions.push(
+            new Collision({
               height: TILE_SIZE,
               width: TILE_SIZE,
               x: columnIndex * TILE_SIZE,
@@ -51,17 +51,17 @@ class BattleZones {
   }
 
   update(deltaTime: number) {
-    this.battleZones.forEach((battleZone) => {
-      battleZone.offsetX = this.map.x;
-      battleZone.offsetY = this.map.y;
+    this.collisions.forEach((collision) => {
+      collision.offsetX = this.map.x;
+      collision.offsetY = this.map.y;
     });
   }
 
   draw(context: CanvasRenderingContext2D) {
-    this.battleZones.forEach((battleZone) => {
-      battleZone.draw(context);
+    this.collisions.forEach((collision) => {
+      collision.draw(context);
     });
   }
 }
 
-export { BattleZones };
+export { CollisionMap };

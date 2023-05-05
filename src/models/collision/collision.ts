@@ -1,4 +1,4 @@
-class Boundary {
+class Collision {
   x: number;
   y: number;
   width: number;
@@ -32,6 +32,7 @@ class Boundary {
 
   draw(context: CanvasRenderingContext2D) {
     this.drawDebugSquare(context);
+    this.drawDebugInfo(context);
   }
 
   private drawDebugSquare(context: CanvasRenderingContext2D) {
@@ -49,11 +50,11 @@ class Boundary {
   private drawDebugInfo(context: CanvasRenderingContext2D) {
     context.fillStyle = '#fff';
     context.font = '10px monospace';
-    context.fillText(`${this.x}`, this.mapX + 5, this.mapY + 10);
-    context.fillText(`${this.y}`, this.mapX + 5, this.mapY + 10 * 2);
-    context.fillText(`${this.mapX}`, this.mapX + 5, this.mapY + 10 * 3);
-    context.fillText(`${this.mapY}`, this.mapX + 5, this.mapY + 10 * 4);
+    context.fillText(`x:${this.x}`, this.mapX + 5, this.mapY + 10);
+    context.fillText(`y:${this.y}`, this.mapX + 5, this.mapY + 10 * 2);
+    context.fillText(`mx:${this.mapX}`, this.mapX + 5, this.mapY + 10 * 3);
+    context.fillText(`my:${this.mapY}`, this.mapX + 5, this.mapY + 10 * 4);
   }
 }
 
-export { Boundary };
+export { Collision };

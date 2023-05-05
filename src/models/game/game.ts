@@ -1,34 +1,22 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '@pokemon-game/constants/canvas';
 import { InputHandler } from '@pokemon-game/utils/input-hanler';
+import { ScreenName } from '@pokemon-game/enums/screen-name';
+import { Screen } from '@pokemon-game/utils/screen/screen';
+import { ScreenNameToScreenMap } from '@pokemon-game/maps/screen-name-to-scene-map';
 
 import { Player } from '../player';
-import { Sprite } from '../sprite';
-import { Collisions } from '../collisions';
-import { BattleZones } from '../battle-zones';
-
-import townMapImg from '@pokemon-game/assets/images/town-map.png';
-import townMapForegroundImg from '@pokemon-game/assets/images/town-map-foreground.png';
-import rawCollisions from '@pokemon-game/data/collisions.json';
-import rawBattleZones from '@pokemon-game/data/battle-zones.json';
-
-const mapImage = new Image();
-mapImage.src = townMapImg;
-
-const mapForegroundImage = new Image();
-mapForegroundImage.src = townMapForegroundImg;
 
 class Game {
   context: CanvasRenderingContext2D;
   height: number;
   width: number;
   player: Player;
-  map: Sprite;
-  mapForeground: Sprite;
-  collisions: Collisions;
-  battleZones: BattleZones;
-  input = new InputHandler();
+  input: InputHandler;
+  screenName = ScreenName.TOWN;
+  screen: Screen;
   animationRequestId: number | null = null;
   lastTime = 0;
+  isDestroied = false;
 
   constructor(canvas: HTMLCanvasElement) {
     this.context = canvas.getContext('2d')!;
@@ -40,45 +28,26 @@ class Game {
     this.width = canvas.width;
 
     this.player = new Player(this);
-    this.map = new Sprite({
-      spritesheet: mapImage,
-    });
-    this.mapForeground = new Sprite({
-      spritesheet: mapForegroundImage,
-    });
-    this.collisions = new Collisions({
-      rawCollisions,
-      map: this.map,
-    });
-    this.battleZones = new BattleZones({
-      rawBattleZones,
-      map: this.map,
-    });
+
+    this.input = new InputHandler();
+
+    const ScreenConstructor = ScreenNameToScreenMap[this.screenName];
+    this.screen = new ScreenConstructor(this);
+  }
+
+  setScreen(scene: ScreenName) {
+    this.screen.destroy();
+    this.screenName = scene;
+    const ScreenConstructor = ScreenNameToScreenMap[scene];
+    this.screen = new ScreenConstructor(this);
   }
 
   render() {
-    this.map.draw(this.context);
-    this.collisions.draw(this.context);
-    this.battleZones.draw(this.context);
-    this.player.draw(this.context);
-    this.mapForeground.draw(this.context);
+    this.screen.render();
   }
 
   update(deltaTime: number) {
-    this.player.update(deltaTime);
-    this.updateMap();
-    this.collisions.update(deltaTime);
-    this.battleZones.update(deltaTime);
-  }
-
-  updateMap() {
-    const newMapX = this.player.mapX - this.width / 2;
-    const newMapY = this.player.mapY - this.height / 2;
-
-    this.map.x = newMapX;
-    this.map.y = newMapY;
-    this.mapForeground.x = newMapX;
-    this.mapForeground.y = newMapY;
+    this.screen.update(deltaTime);
   }
 
   private animate: FrameRequestCallback = (time) => {
@@ -89,7 +58,9 @@ class Game {
     this.render();
     this.lastTime = time;
 
-    this.animationRequestId = requestAnimationFrame(this.animate);
+    if (!this.isDestroied) {
+      this.animationRequestId = requestAnimationFrame(this.animate);
+    }
   };
 
   start() {
@@ -100,6 +71,8 @@ class Game {
     if (this.animationRequestId !== null) {
       cancelAnimationFrame(this.animationRequestId);
     }
+    this.isDestroied = true;
+    this.screen.destroy();
   }
 }
 

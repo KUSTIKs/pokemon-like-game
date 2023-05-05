@@ -16,6 +16,8 @@ export default defineConfig({
       '@pokemon-game/data': getPath('./src/data'),
       '@pokemon-game/enums': getPath('./src/enums'),
       '@pokemon-game/maps': getPath('./src/maps'),
+      '@pokemon-game/models': getPath('./src/models'),
+      '@pokemon-game/screens': getPath('./src/screens'),
     },
   },
 });
