@@ -12,6 +12,7 @@ export default defineConfig({
       '@pokemon-game/assets': getPath('./src/assets'),
       '@pokemon-game/constants': getPath('./src/constants'),
       '@pokemon-game/utils': getPath('./src/utils'),
+      '@pokemon-game/types': getPath('./src/types'),
     },
   },
 });

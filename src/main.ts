@@ -5,4 +5,4 @@ import './styles/styles.css';
 const gameCanvas = document.querySelector<HTMLCanvasElement>('#game')!;
 
 const game = new Game(gameCanvas);
-game.render();
+game.start();

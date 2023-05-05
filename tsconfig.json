@@ -22,7 +22,8 @@
     "paths": {
       "@pokemon-game/assets/*": ["./src/assets/*"],
       "@pokemon-game/constants/*": ["./src/constants/*"],
-      "@pokemon-game/utils/*": ["./src/utils/*"]
+      "@pokemon-game/utils/*": ["./src/utils/*"],
+      "@pokemon-game/types/*": ["./src/types/*"]
     }
   },
   "include": ["src"]

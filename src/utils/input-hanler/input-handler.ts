@@ -1,12 +1,14 @@
 class InputHandler {
   keys = new Set<string>();
+  lastKey: string | null = null;
 
-  constructor(private element: HTMLElement) {
+  constructor(private element = window) {
     this.init();
   }
 
   private handleKeydown = (event: KeyboardEvent) => {
     this.keys.add(event.key);
+    this.lastKey = event.key;
   };
   private handleKeyup = (event: KeyboardEvent) => {
     this.keys.delete(event.key);
