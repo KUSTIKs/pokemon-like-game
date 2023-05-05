@@ -14,6 +14,8 @@ export default defineConfig({
       '@pokemon-game/utils': getPath('./src/utils'),
       '@pokemon-game/types': getPath('./src/types'),
       '@pokemon-game/data': getPath('./src/data'),
+      '@pokemon-game/enums': getPath('./src/enums'),
+      '@pokemon-game/maps': getPath('./src/maps'),
     },
   },
 });

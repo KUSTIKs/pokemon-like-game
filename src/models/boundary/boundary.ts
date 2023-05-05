@@ -31,6 +31,10 @@ class Boundary {
   }
 
   draw(context: CanvasRenderingContext2D) {
+    this.drawDebugSquare(context);
+  }
+
+  private drawDebugSquare(context: CanvasRenderingContext2D) {
     context.fillStyle = 'red';
     context.strokeStyle = 'red';
 
@@ -40,8 +44,9 @@ class Boundary {
     context.restore();
 
     context.strokeRect(this.mapX, this.mapY, this.width, this.height);
+  }
 
-    // write coordinates on boundary
+  private drawDebugInfo(context: CanvasRenderingContext2D) {
     context.fillStyle = '#fff';
     context.font = '10px monospace';
     context.fillText(`${this.x}`, this.mapX + 5, this.mapY + 10);

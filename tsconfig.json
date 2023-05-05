@@ -24,7 +24,9 @@
       "@pokemon-game/constants/*": ["./src/constants/*"],
       "@pokemon-game/utils/*": ["./src/utils/*"],
       "@pokemon-game/types/*": ["./src/types/*"],
-      "@pokemon-game/data/*": ["./src/data/*"]
+      "@pokemon-game/data/*": ["./src/data/*"],
+      "@pokemon-game/enums/*": ["./src/enums/*"],
+      "@pokemon-game/maps/*": ["./src/maps/*"]
     }
   },
   "include": ["src"]

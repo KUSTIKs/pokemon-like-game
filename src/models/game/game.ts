@@ -38,10 +38,10 @@ class Game {
 
     this.player = new Player(this);
     this.map = new Sprite({
-      image: mapImage,
+      spritesheet: mapImage,
     });
     this.mapForeground = new Sprite({
-      image: mapForegroundImage,
+      spritesheet: mapForegroundImage,
     });
     this.collisions = new Collisions({
       rawCollisions,
