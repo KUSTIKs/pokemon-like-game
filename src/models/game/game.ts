@@ -16,9 +16,9 @@ class Game {
   screen: Screen;
   animationRequestId: number | null = null;
   lastTime = 0;
-  isDestroied = false;
+  isStopped = false;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(private canvas: HTMLCanvasElement) {
     this.context = canvas.getContext('2d')!;
 
     canvas.width = CANVAS_WIDTH;
@@ -35,11 +35,52 @@ class Game {
     this.screen = new ScreenConstructor(this);
   }
 
-  setScreen(scene: ScreenName) {
+  async setScreen(scene: ScreenName) {
     this.screen.destroy();
+    this.stop();
+
+    await this.fadeInCanvas();
+
     this.screenName = scene;
     const ScreenConstructor = ScreenNameToScreenMap[scene];
     this.screen = new ScreenConstructor(this);
+    this.start();
+
+    await this.fadeOutCanvas();
+  }
+
+  private fadeInCanvas() {
+    const animation = this.canvas.animate(
+      {
+        opacity: 0,
+      },
+      {
+        duration: 1000,
+        easing: 'ease-in-out',
+        fill: 'forwards',
+      }
+    );
+
+    return new Promise((resolve) => {
+      animation.onfinish = resolve;
+    });
+  }
+
+  private fadeOutCanvas() {
+    const animation = this.canvas.animate(
+      {
+        opacity: 1,
+      },
+      {
+        duration: 300,
+        easing: 'ease-in-out',
+        fill: 'forwards',
+      }
+    );
+
+    return new Promise((resolve) => {
+      animation.onfinish = resolve;
+    });
   }
 
   render() {
@@ -58,12 +99,17 @@ class Game {
     this.render();
     this.lastTime = time;
 
-    if (!this.isDestroied) {
+    if (!this.isStopped) {
       this.animationRequestId = requestAnimationFrame(this.animate);
     }
   };
 
+  stop() {
+    this.isStopped = true;
+  }
+
   start() {
+    this.isStopped = false;
     this.animationRequestId = requestAnimationFrame(this.animate);
   }
 
@@ -71,7 +117,7 @@ class Game {
     if (this.animationRequestId !== null) {
       cancelAnimationFrame(this.animationRequestId);
     }
-    this.isDestroied = true;
+    this.stop();
     this.screen.destroy();
   }
 }

@@ -8,6 +8,7 @@ import townMapForegroundImg from '@pokemon-game/assets/images/town-map-foregroun
 import rawBoundaries from '@pokemon-game/data/boundaries.json';
 import rawBattleZones from '@pokemon-game/data/battle-zones.json';
 import { CollisionDetector } from '@pokemon-game/utils/collision-detector';
+import { ScreenName } from '@pokemon-game/enums/screen-name';
 
 const mapImage = new Image();
 mapImage.src = townMapImg;
@@ -99,6 +100,7 @@ class TownScreen implements Screen {
 
     if (isBattleZoneCollision) {
       console.log('battle zone collision');
+      this.game.setScreen(ScreenName.BATTLE);
     }
 
     return !isBoundaryCollision;

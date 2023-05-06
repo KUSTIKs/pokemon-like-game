@@ -3,11 +3,9 @@ import { Game } from '@pokemon-game/models/game';
 abstract class Screen {
   constructor(public game: Game) {}
 
-  render() {}
-
-  update(deltaTime: number) {}
-
-  destroy() {}
+  abstract render(): void;
+  abstract update(deltaTime: number): void;
+  abstract destroy(): void;
 }
 
 export { Screen };
