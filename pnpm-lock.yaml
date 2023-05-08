@@ -4,6 +4,9 @@ dependencies:
   gsap:
     specifier: ^3.11.5
     version: 3.11.5
+  howler:
+    specifier: ^2.2.3
+    version: 2.2.3
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -12,6 +15,9 @@ dependencies:
     version: 18.2.0(react@18.2.0)
 
 devDependencies:
+  '@types/howler':
+    specifier: ^2.2.7
+    version: 2.2.7
   '@types/node':
     specifier: ^18.16.3
     version: 18.16.3
@@ -228,6 +234,10 @@ packages:
     dev: true
     optional: true
 
+  /@types/howler@2.2.7:
+    resolution: {integrity: sha512-PEZldwZqJJw1PWRTpupyC7ajVTZA8aHd8nB/Y0n6zRZi5u8ktYDntsHj13ltEiBRqWwF06pASxBEvCTxniG8eA==}
+    dev: true
+
   /@types/node@18.16.3:
     resolution: {integrity: sha512-OPs5WnnT1xkCBiuQrZA4+YAV4HEJejmHneyraIaxsbev5yCEr6KMwINNFP9wQeFIw8FWcoTqF3vQsa5CDaI+8Q==}
     dev: true
@@ -298,6 +308,10 @@ packages:
 
   /gsap@3.11.5:
     resolution: {integrity: sha512-Q89nKCLgoX5xUjznh9LcaIUkz54k1voNucT1Rpf9SJNFIQznBwFqt5qUUQbeVInFyN/n18OUJkpeI6CNEDt74w==}
+    dev: false
+
+  /howler@2.2.3:
+    resolution: {integrity: sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==}
     dev: false
 
   /js-tokens@4.0.0:

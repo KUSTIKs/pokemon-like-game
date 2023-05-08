@@ -9,6 +9,7 @@ import rawBoundaries from '@pokemon-game/data/boundaries.json';
 import rawBattleZones from '@pokemon-game/data/battle-zones.json';
 import { CollisionDetector } from '@pokemon-game/utils/collision-detector';
 import { ScreenName } from '@pokemon-game/enums/screen-name';
+import { appAudio } from '@pokemon-game/utils/app-audio';
 
 const mapImage = new Image();
 mapImage.src = townMapImg;
@@ -43,6 +44,7 @@ class TownScreen implements Screen {
 
   private init() {
     this.game.player.shouldMoveHooks.push(this.shouldPlayerMove);
+    appAudio.map.play();
   }
 
   destroy() {
@@ -50,6 +52,7 @@ class TownScreen implements Screen {
       this.game.player.shouldMoveHooks.indexOf(this.shouldPlayerMove),
       1
     );
+    appAudio.map.stop();
   }
 
   render() {

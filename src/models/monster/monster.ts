@@ -1,3 +1,4 @@
+import { appAudio } from '@pokemon-game/utils/app-audio';
 import { Attack } from '../attack';
 import { Sprite } from '../sprite';
 

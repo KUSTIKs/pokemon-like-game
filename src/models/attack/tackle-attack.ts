@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 
 import { Monster } from '../monster';
 import { Attack } from './attack';
+import { appAudio } from '@pokemon-game/utils/app-audio';
 
 class TackleAttack extends Attack {
   static damage = 10;
@@ -29,6 +30,8 @@ class TackleAttack extends Attack {
         duration: 0.1,
         onComplete: () => {
           super.perform(target);
+
+          appAudio.tackleHit.play();
 
           gsap.to(target.sprite, {
             x: target.sprite.x - 10 * positionFactor,

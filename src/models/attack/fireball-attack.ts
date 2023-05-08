@@ -1,5 +1,7 @@
 import { gsap } from 'gsap';
 
+import { appAudio } from '@pokemon-game/utils/app-audio';
+
 import { Monster } from '../monster';
 import { Sprite } from '../sprite';
 import { Attack } from './attack';
@@ -39,6 +41,8 @@ class FireballAttack extends Attack {
       rotation: fireballAngle,
     });
 
+    appAudio.initFireball.play();
+
     gsap.to(this.fireball, {
       x: target.sprite.x,
       y: target.sprite.y,
@@ -47,6 +51,7 @@ class FireballAttack extends Attack {
         super.perform(target);
 
         this.fireball = null;
+        appAudio.fireballHit.play();
 
         gsap.to(target.sprite, {
           x: target.sprite.x + 10,

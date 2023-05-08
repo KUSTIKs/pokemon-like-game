@@ -7,6 +7,7 @@ import { CharacterBar } from '../character-bar';
 import { BattleScreen } from '../../battle-screen';
 
 import classes from './app.module.css';
+import { appAudio } from '@pokemon-game/utils/app-audio';
 
 function App(this: BattleScreen) {
   const handlePlayerAttack = (attack: Attack) => {
@@ -30,13 +31,13 @@ function App(this: BattleScreen) {
     }
   };
 
-  const isWin = this.enemyMonster.health <= 0;
+  const isVictory = this.enemyMonster.health <= 0;
   const isLoose = this.playerMonster.health <= 0;
 
   return (
     <>
       <BottomBar>
-        {isWin ? (
+        {isVictory ? (
           <div className={classes.messageWrapper}>
             <p className={classes.message}>
               Congratulations, you have defeated {this.enemyMonster.displayName}

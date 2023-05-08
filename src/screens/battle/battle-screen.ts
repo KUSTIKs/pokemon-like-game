@@ -13,6 +13,7 @@ import draggleSpriteImg from '@pokemon-game/assets/images/draggle.sprite.png';
 import { Monster } from '@pokemon-game/models/monster';
 import { Attack } from '@pokemon-game/models/attack';
 import { ScreenName } from '@pokemon-game/enums/screen-name';
+import { appAudio } from '@pokemon-game/utils/app-audio';
 
 const mapImage = new Image();
 mapImage.src = battleBackgroundImg;
@@ -47,6 +48,13 @@ class BattleScreen implements Screen {
     });
 
     this.componentsRoot = ReactDOM.createRoot(componentsRootElement);
+
+    this.init();
+  }
+
+  private init() {
+    appAudio.initBattle.play();
+    appAudio.battle.play();
   }
 
   renderComponents() {
@@ -75,6 +83,7 @@ class BattleScreen implements Screen {
 
   destroy() {
     this.componentsRoot.unmount();
+    appAudio.battle.stop();
   }
 }
 

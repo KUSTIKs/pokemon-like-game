@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.7",
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "gsap": "^3.11.5",
+    "howler": "^2.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
