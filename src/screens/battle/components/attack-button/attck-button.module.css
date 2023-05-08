@@ -1,0 +1,19 @@
+.button {
+  font-family: 24px;
+  padding: 10px;
+  font-size: 24px;
+  background-color: transparent;
+  flex-grow: 1;
+  display: grid;
+  place-items: center;
+  border: none;
+  font-family: inherit;
+  transition: 100ms;
+  cursor: pointer;
+  color: #ae814a;
+  border-radius: 10px;
+}
+.button:hover {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.25);
+}

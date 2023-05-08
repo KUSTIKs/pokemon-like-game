@@ -12,13 +12,13 @@ class Game {
   width: number;
   player: Player;
   input: InputHandler;
-  screenName = ScreenName.TOWN;
+  screenName = ScreenName.BATTLE;
   screen: Screen;
   animationRequestId: number | null = null;
   lastTime = 0;
   isStopped = false;
 
-  constructor(private canvas: HTMLCanvasElement) {
+  constructor(public canvas: HTMLCanvasElement) {
     this.context = canvas.getContext('2d')!;
 
     canvas.width = CANVAS_WIDTH;

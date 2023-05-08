@@ -51,12 +51,12 @@ class PlayerSprite extends Sprite {
       this.setSpritesheet(playerRightSpriteImage);
     }
 
-    // start moving sprite if player pressed any movement key
+    // Start moving sprite if player pressed any movement key
     const shouldMove = gameKeysMap.movementKeys.includes(input.lastKey);
 
-    if (shouldMove && !this.isMoving) {
+    if (shouldMove && !this.isAnimating) {
       this.startMoving();
-    } else if (!shouldMove && this.isMoving) {
+    } else if (!shouldMove && this.isAnimating) {
       this.stopMoving();
     }
   }

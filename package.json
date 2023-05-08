@@ -10,7 +10,14 @@
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
     "typescript": "^5.0.2",
     "vite": "^4.3.2"
+  },
+  "dependencies": {
+    "gsap": "^3.11.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
