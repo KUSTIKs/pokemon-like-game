@@ -29,11 +29,16 @@ class Player {
     this.sprite = new PlayerSprite(game);
   }
 
+  resetPosition() {
+    this.mapX = DEFAULT_X;
+    this.mapY = DEFAULT_Y;
+  }
+
   draw(context: CanvasRenderingContext2D) {
     this.sprite.draw(context);
 
-    this.drawDebugInfo(context);
-    this.drawDebugCircles(context);
+    // this.drawDebugInfo(context);
+    // this.drawDebugCircles(context);
   }
 
   update(deltaTime: number) {

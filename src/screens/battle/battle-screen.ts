@@ -4,12 +4,15 @@ import { Game } from '@pokemon-game/models/game';
 import { Screen } from '@pokemon-game/utils/screen/screen';
 import { Sprite } from '@pokemon-game/models/sprite';
 
-import { renderComponents } from './components/render-components';
+import { App } from './components/app';
 import { Draggle, Emby } from './models';
 
 import battleBackgroundImg from '@pokemon-game/assets/images/battle-background.png';
 import embySpriteImg from '@pokemon-game/assets/images/emby.sprite.png';
 import draggleSpriteImg from '@pokemon-game/assets/images/draggle.sprite.png';
+import { Monster } from '@pokemon-game/models/monster';
+import { Attack } from '@pokemon-game/models/attack';
+import { ScreenName } from '@pokemon-game/enums/screen-name';
 
 const mapImage = new Image();
 mapImage.src = battleBackgroundImg;
@@ -21,29 +24,38 @@ const draggleSpriteImage = new Image();
 draggleSpriteImage.src = draggleSpriteImg;
 
 const componentsRootElement = document.getElementById('game-components-root')!;
-const componentsRoot = ReactDOM.createRoot(componentsRootElement);
 
 class BattleScreen implements Screen {
   map: Sprite;
-  emby: Emby;
-  draggle: Draggle;
+  playerMonster: Monster;
+  enemyMonster: Monster;
+  currentAttack: Attack | null = null;
+  componentsRoot: ReactDOM.Root;
+  isDistroyed = false;
 
   constructor(public game: Game) {
     this.map = new Sprite({
       spritesheet: mapImage,
     });
-    this.emby = new Emby({
+    this.playerMonster = new Emby({
       x: 280,
       y: 325,
     });
-    this.draggle = new Draggle({
+    this.enemyMonster = new Draggle({
       x: 800,
       y: 100,
     });
+
+    this.componentsRoot = ReactDOM.createRoot(componentsRootElement);
   }
 
   renderComponents() {
-    componentsRoot.render(renderComponents.call(this));
+    if (this.componentsRoot) this.componentsRoot.render(App.call(this));
+  }
+
+  goToTown() {
+    this.game.player.resetPosition();
+    this.game.setScreen(ScreenName.TOWN);
   }
 
   render() {
@@ -52,17 +64,17 @@ class BattleScreen implements Screen {
     this.renderComponents();
 
     this.map.draw(context);
-    this.draggle.draw(context);
-    this.emby.draw(context);
+    this.playerMonster.draw(context);
+    this.enemyMonster.draw(context);
   }
 
   update(deltaTime: number) {
-    this.draggle.update(deltaTime);
-    this.emby.update(deltaTime);
+    this.playerMonster.update(deltaTime);
+    this.enemyMonster.update(deltaTime);
   }
 
   destroy() {
-    componentsRoot.unmount();
+    this.componentsRoot.unmount();
   }
 }
 

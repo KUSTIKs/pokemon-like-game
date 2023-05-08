@@ -1,0 +1,9 @@
+.wrapper {
+  display: flex;
+  position: absolute;
+  inset: auto 10px 10px 10px;
+  height: 100px;
+  background-color: #3b1200;
+  border: 4px solid #ab7f43;
+  color: #e5d9aa;
+}

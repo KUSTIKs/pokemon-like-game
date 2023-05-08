@@ -1,13 +1,17 @@
-import { Enemy } from '../enemy';
+import { Monster } from '../monster';
 
 class Attack {
+  displayName = 'Attack';
   damage: number;
+  isFinished = true;
+  attacker: Monster;
 
-  constructor({ damage }: { damage: number }) {
+  constructor({ damage, attacker }: { damage: number; attacker: Monster }) {
     this.damage = damage;
+    this.attacker = attacker;
   }
 
-  perform(attacker: Enemy, target: Enemy) {
+  perform(target: Monster) {
     target.takeDamage(this.damage);
   }
 

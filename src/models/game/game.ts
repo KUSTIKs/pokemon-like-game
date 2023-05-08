@@ -12,7 +12,7 @@ class Game {
   width: number;
   player: Player;
   input: InputHandler;
-  screenName = ScreenName.BATTLE;
+  screenName = ScreenName.TOWN;
   screen: Screen;
   animationRequestId: number | null = null;
   lastTime = 0;
@@ -36,8 +36,8 @@ class Game {
   }
 
   async setScreen(scene: ScreenName) {
-    this.screen.destroy();
     this.stop();
+    this.screen.destroy();
 
     await this.fadeInCanvas();
 
@@ -106,6 +106,9 @@ class Game {
 
   stop() {
     this.isStopped = true;
+    if (this.animationRequestId !== null) {
+      cancelAnimationFrame(this.animationRequestId);
+    }
   }
 
   start() {
@@ -114,11 +117,9 @@ class Game {
   }
 
   destroy() {
-    if (this.animationRequestId !== null) {
-      cancelAnimationFrame(this.animationRequestId);
-    }
     this.stop();
     this.screen.destroy();
+    this.input.destroy();
   }
 }
 

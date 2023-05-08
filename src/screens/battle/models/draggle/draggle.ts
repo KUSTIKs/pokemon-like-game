@@ -1,12 +1,15 @@
-import { Enemy } from '@pokemon-game/models/enemy';
+import { Monster } from '@pokemon-game/models/monster';
 import { Sprite } from '@pokemon-game/models/sprite';
 
 import draggleSpriteImg from '@pokemon-game/assets/images/draggle.sprite.png';
+import { FireballAttack, TackleAttack } from '@pokemon-game/models/attack';
 
 const draggleSpriteImage = new Image();
 draggleSpriteImage.src = draggleSpriteImg;
 
-class Draggle extends Enemy {
+class Draggle extends Monster {
+  displayName = 'Draggle';
+
   constructor({ x, y }: { x: number; y: number }) {
     const sprite = new Sprite({
       spritesheet: draggleSpriteImage,
@@ -20,6 +23,8 @@ class Draggle extends Enemy {
     super({
       sprite,
     });
+
+    this.attacks = [new TackleAttack(this), new FireballAttack(this)];
   }
 }
 

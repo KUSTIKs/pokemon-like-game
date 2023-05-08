@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 
-import { Enemy } from '../enemy';
+import { Monster } from '../monster';
 import { Sprite } from '../sprite';
 import { Attack } from './attack';
 
@@ -10,20 +10,22 @@ const fireballSpriteImage = new Image();
 fireballSpriteImage.src = fireballSpriteImg;
 
 class FireballAttack extends Attack {
-  static damage = 10;
+  static damage = 25;
   fireball: Sprite | null = null;
+  displayName = 'Fireball';
 
-  constructor() {
+  constructor(attacker: Monster) {
     super({
       damage: FireballAttack.damage,
+      attacker,
     });
   }
 
-  perform(attacker: Enemy, target: Enemy) {
-    attacker.addActiveAttack(this);
+  perform(target: Monster) {
+    this.isFinished = false;
 
-    const dx = attacker.sprite.x - target.sprite.x;
-    const dy = attacker.sprite.y - target.sprite.y;
+    const dx = this.attacker.sprite.x - target.sprite.x;
+    const dy = this.attacker.sprite.y - target.sprite.y;
 
     const fireballAngle = Math.atan2(dy, dx) ** -1;
 
@@ -31,8 +33,8 @@ class FireballAttack extends Attack {
       spritesheet: fireballSpriteImage,
       fps: 4,
       framesCount: 4,
-      x: attacker.sprite.x,
-      y: attacker.sprite.y,
+      x: this.attacker.sprite.x,
+      y: this.attacker.sprite.y,
       isAnimating: true,
       rotation: fireballAngle,
     });
@@ -42,7 +44,7 @@ class FireballAttack extends Attack {
       y: target.sprite.y,
       duration: 0.5,
       onComplete: () => {
-        super.perform(attacker, target);
+        super.perform(target);
 
         this.fireball = null;
 
@@ -53,7 +55,7 @@ class FireballAttack extends Attack {
           repeat: 5,
           duration: 0.1,
           onComplete: () => {
-            attacker.removeActiveAttack(this);
+            this.isFinished = true;
           },
         });
       },

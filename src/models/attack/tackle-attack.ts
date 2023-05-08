@@ -1,30 +1,34 @@
 import { gsap } from 'gsap';
 
-import { Enemy } from '../enemy';
+import { Monster } from '../monster';
 import { Attack } from './attack';
 
 class TackleAttack extends Attack {
   static damage = 10;
+  displayName = 'Tackle';
 
-  constructor() {
+  constructor(attacker: Monster) {
     super({
       damage: TackleAttack.damage,
+      attacker,
     });
   }
 
-  perform(attacker: Enemy, target: Enemy) {
-    const tl = gsap.timeline();
-    const positionFactor = Math.sign(attacker.sprite.x - target.sprite.x);
+  perform(target: Monster) {
+    this.isFinished = false;
 
-    tl.to(attacker.sprite, {
-      x: attacker.sprite.x + 20 * positionFactor,
+    const tl = gsap.timeline();
+    const positionFactor = Math.sign(this.attacker.sprite.x - target.sprite.x);
+
+    tl.to(this.attacker.sprite, {
+      x: this.attacker.sprite.x + 20 * positionFactor,
       duration: 0.1,
     })
-      .to(attacker.sprite, {
-        x: attacker.sprite.x - 40 * positionFactor,
+      .to(this.attacker.sprite, {
+        x: this.attacker.sprite.x - 40 * positionFactor,
         duration: 0.1,
         onComplete: () => {
-          super.perform(attacker, target);
+          super.perform(target);
 
           gsap.to(target.sprite, {
             x: target.sprite.x - 10 * positionFactor,
@@ -32,11 +36,14 @@ class TackleAttack extends Attack {
             yoyo: true,
             repeat: 5,
             duration: 0.1,
+            onComplete: () => {
+              this.isFinished = true;
+            },
           });
         },
       })
-      .to(attacker.sprite, {
-        x: attacker.sprite.x,
+      .to(this.attacker.sprite, {
+        x: this.attacker.sprite.x,
       });
   }
 }

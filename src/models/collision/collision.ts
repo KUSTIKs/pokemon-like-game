@@ -31,8 +31,8 @@ class Collision {
   }
 
   draw(context: CanvasRenderingContext2D) {
-    this.drawDebugSquare(context);
-    this.drawDebugInfo(context);
+    // this.drawDebugSquare(context);
+    // this.drawDebugInfo(context);
   }
 
   private drawDebugSquare(context: CanvasRenderingContext2D) {

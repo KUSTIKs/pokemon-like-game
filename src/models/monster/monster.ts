@@ -1,11 +1,12 @@
 import { Attack } from '../attack';
 import { Sprite } from '../sprite';
 
-class Enemy {
+class Monster {
   maxHealth: number;
   health: number;
   sprite: Sprite;
-  activeAttacks: Attack[] = [];
+  attacks: Attack[] = [];
+  displayName = 'Monster';
 
   constructor({
     health = 100,
@@ -23,24 +24,19 @@ class Enemy {
 
   takeDamage(amount: number) {
     this.health = Math.max(0, this.health - amount);
+
+    if (this.health === 0) {
+      this.sprite.opacity = 0.25;
+      this.sprite.stopMoving();
+    }
   }
 
-  performAttack(target: Enemy, attack: Attack) {
-    attack.perform(this, target);
-  }
-
-  addActiveAttack(attack: Attack) {
-    this.activeAttacks.push(attack);
-  }
-
-  removeActiveAttack(attack: Attack) {
-    this.activeAttacks = this.activeAttacks.filter(
-      (activeAttack) => activeAttack !== attack
-    );
+  performAttack(target: Monster, attack: Attack) {
+    attack.perform(target);
   }
 
   draw(context: CanvasRenderingContext2D) {
-    this.activeAttacks.forEach((attack) => attack.draw(context));
+    this.attacks.forEach((attack) => attack.draw(context));
     this.sprite.draw(context);
   }
 
@@ -49,4 +45,4 @@ class Enemy {
   }
 }
 
-export { Enemy };
+export { Monster };

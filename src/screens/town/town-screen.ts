@@ -99,7 +99,6 @@ class TownScreen implements Screen {
     );
 
     if (isBattleZoneCollision) {
-      console.log('battle zone collision');
       this.game.setScreen(ScreenName.BATTLE);
     }
 
